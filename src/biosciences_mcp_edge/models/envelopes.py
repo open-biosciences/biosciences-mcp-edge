@@ -47,12 +47,14 @@ class ErrorEnvelope(BaseModel):
         )
 
     @classmethod
-    def entity_not_found(cls, entity_id: str) -> "ErrorEnvelope":
+    def entity_not_found(
+        cls, entity_id: str, recovery_hint: str = "Verify the identifier or try a different query."
+    ) -> "ErrorEnvelope":
         return cls(
             error=ErrorDetail(
                 code=ErrorCode.ENTITY_NOT_FOUND,
                 message=f"No results found for '{entity_id}'.",
-                recovery_hint="Verify the identifier or try a different query.",
+                recovery_hint=recovery_hint,
                 invalid_input=entity_id,
             )
         )

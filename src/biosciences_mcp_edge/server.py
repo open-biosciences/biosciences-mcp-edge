@@ -82,7 +82,13 @@ async def get_mechanism(
         return ErrorEnvelope.upstream_error(0, str(e))
 
     if not results:
-        return ErrorEnvelope.entity_not_found(chembl_id)
+        return ErrorEnvelope.entity_not_found(
+            chembl_id,
+            recovery_hint=(
+                "The identifier is valid but ChEMBL has no mechanism-of-action data for this compound. "
+                "Try PubMed literature or DrugBank for mechanism information."
+            ),
+        )
 
     if slim:
         for r in results:
